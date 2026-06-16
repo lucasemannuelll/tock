@@ -10,4 +10,15 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 use chrono::Local;
 use dirs;
 
-fn main()
+
+const TAG_LEN: usize = 64;
+const NOTE_LEN: usize = 128;
+
+
+#[derive(Copy, Clone, Default)]
+struct Event {
+    start: i64,
+    end: i64,
+    tags: [u8, TAG_LEN],
+    notes: [u8, NOTE_LEN],
+}
