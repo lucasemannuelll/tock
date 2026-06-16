@@ -31,3 +31,9 @@ static mut RING: [Event; RING_BUFFER] = [Event {
     notes: [0; NOTE_LEN],
 }; RING_BUFFER];
 
+
+static HEAD: AtomicUsize = AtomicUsize::new(0);
+static TAIL: AtomicUsize = AtomicUsize::new(0);
+static RUNNING: AtomicBool = AtomicBool::new(true);
+
+
