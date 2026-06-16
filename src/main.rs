@@ -40,3 +40,11 @@ static RUNNING: AtomicBool = AtomicBool::new(true);
 static FILE: OnceLock<Mutex<File>> = OnceLock::new();
 
 static WRITER_THREAD: OnceLock<thread::Thread> = OnceLock::new();
+
+
+fn current_timestamp() -> i64 {
+    SystemTime::new()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_secs() as i64
+}
