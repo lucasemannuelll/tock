@@ -37,3 +37,6 @@ static TAIL: AtomicUsize = AtomicUsize::new(0);
 static RUNNING: AtomicBool = AtomicBool::new(true);
 
 
+static FILE: OnceLock<Mutex<File>> = OnceLock::new();
+
+static WRITER_THREAD: OnceLock<thread::Thread> = OnceLock::new();
