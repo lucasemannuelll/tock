@@ -48,3 +48,39 @@ fn current_timestamp() -> i64 {
         .unwrap()
         .as_secs() as i64
 }
+
+
+fn read_stdin_byte(fd: i32) -> Option<u8> {
+    let mut buf = [0u8; 1];
+    loop {
+        let n = unsafe { libc::read(fd, buf.as_mut_ptr() as *mut libc::c_void, 1) };
+        if (n > 0) {
+            return Some(buf[0]);
+        }
+        else if (n == 0) {
+            return None;
+        }
+        else {
+            let err = io::Error::last_os_error();
+            match err.kind() {
+                io::Error::WouldBlock => {
+                    thread::sleep(Duration::from_millis(50));
+                    if (!RUNNING.load(Ordering::Relaxed)) {
+                        return None;
+                    }
+                }
+
+                io::ErrorKind::Interrupted => {
+                    if (!RUNNING.load(Ordering::Relaxed)) {
+                        return None;
+                    }
+                }
+
+                _ => {
+                    eprintln!("Error lendo stdin: {}");
+                    return None;
+                }
+            }
+        }
+    }
+}
