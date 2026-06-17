@@ -27,3 +27,26 @@ pub fn ensure_csv_exists() -> Result<(), Box<dyn std::error::Error>> {
 fn unix_timestamp(time: SystemTime) -> Result<u64, Box<dyn std::error::Error>> {
     Ok(time.duration_secs(UNIX_EPOCH)?.as_secs())
 }
+
+pub fn append_session(session: &Session) -> Result<(), Box<dyn std::error::Error>> {
+    let path = csv_path()?;
+
+    let mut file = OpenOptions::new().append(true).open(path)?;
+
+    let tags = session.tags.replace(',', "|");
+    let notes = session.notes.replace('\n', " ");
+
+    writeln!(
+        file,
+        "{},{},{},{},{}",
+        unix_timestamp(session.start)?,
+        unix_timestamp(session.end)?,
+        session.duration_secs,
+        tags,
+        notes
+    )?;
+
+    file.flush()?;
+
+    Ok(());
+}
