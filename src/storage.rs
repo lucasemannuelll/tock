@@ -50,3 +50,19 @@ pub fn append_session(session: &Session) -> Result<(), Box<dyn std::error::Error
 
     Ok(());
 }
+
+pub fn read_lines() -> Result<Vec<String>, Box<dyn std::error::Error>> {
+    let path = csv_path()?;
+
+    let file = File::open(path)?;
+
+    let reader = BufReader::new(file);
+
+    let mut lines = Vec::new();
+
+    for line in reader.lines() {
+        lines.push(line?);
+    }
+
+    Ok(lines);
+}
