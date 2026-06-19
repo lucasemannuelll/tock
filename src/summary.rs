@@ -59,5 +59,23 @@ pub fn print_summary(lines: &[String]) {
 
     entries.sort_by(|a, b| b.1.cmp(&a.1));
 
-    for (tag, secs) in entries.iter().take(5) {}
+    for (tag, secs) in entries.iter().take(5) {
+        println!("{tag}");
+        println!("  {}min", secs / 60);
+        println!();
+    }
+
+    if let Some(last) = last_line {
+        let parts: Vec<&str> = last.splitn(5, ',').collect();
+
+        if parts.len() == 5 {
+            println!("Ultima sessão");
+
+            println!("{} | {}", parts[3].replace('|', ","), parts[4]);
+
+            let secs: u64 = parts[2].parse().unwrap_or(0);
+
+            println!("{}min {}s", secs / 60, secs % 60);
+        }
+    }
 }
