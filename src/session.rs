@@ -28,6 +28,7 @@ impl ActiveSession {
         Session {
             start: self.start,
             end,
+            duration_secs: duration,
             tags: self.tags,
             notes: self.notes,
         }

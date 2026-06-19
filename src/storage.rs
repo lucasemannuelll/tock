@@ -1,4 +1,4 @@
-#![forbib(unsafe_code)]
+#![forbid(unsafe_code)]
 
 use crate::session::Session;
 use std::{
@@ -22,10 +22,12 @@ pub fn ensure_csv_exists() -> Result<(), Box<dyn std::error::Error>> {
 
         writeln!(file, "start,end,duration_secs,tags,notes")?;
     }
+
+    Ok(())
 }
 
 fn unix_timestamp(time: SystemTime) -> Result<u64, Box<dyn std::error::Error>> {
-    Ok(time.duration_secs(UNIX_EPOCH)?.as_secs())
+    Ok(time.duration_since(UNIX_EPOCH)?.as_secs())
 }
 
 pub fn append_session(session: &Session) -> Result<(), Box<dyn std::error::Error>> {
@@ -48,7 +50,7 @@ pub fn append_session(session: &Session) -> Result<(), Box<dyn std::error::Error
 
     file.flush()?;
 
-    Ok(());
+    Ok(())
 }
 
 pub fn read_lines() -> Result<Vec<String>, Box<dyn std::error::Error>> {
@@ -64,5 +66,5 @@ pub fn read_lines() -> Result<Vec<String>, Box<dyn std::error::Error>> {
         lines.push(line?);
     }
 
-    Ok(lines);
+    Ok(lines)
 }
