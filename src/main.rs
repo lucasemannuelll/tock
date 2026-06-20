@@ -17,11 +17,10 @@ use std::{
 fn parse_start(line: &str) -> Option<(String, String)> {
     let rest = line.strip_prefix("start ")?;
 
-    let mut parts = rest.splitn(2, ' ');
+    let first_space = rest.find(' ')?;
 
-    let tags = parts.next()?.trim();
-
-    let notes = parts.next()?.trim();
+    let tags = rest[..first_space].trim();
+    let notes = rest[first_space + 1..].trim();
 
     if tags.is_empty() || notes.is_empty() {
         return None;
