@@ -49,11 +49,10 @@ pub fn print_summary(lines: &[String]) {
     println!("=== Resumo de Hoje ===");
     println!();
 
-    println!(
-        "Total registrado: {}h {}min",
-        total_today / 3600,
-        (total_today / 3600) / 60
-    );
+    let hours = total_today / 3600;
+    let minutes = (total_today % 3600) / 60;
+
+    println!("Total registrado: {}h {}min", hours, minutes);
 
     let mut entries: Vec<_> = tags.into_iter().collect();
 
