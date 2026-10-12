@@ -1,6 +1,6 @@
 # Time Tracker
 
-Um rastreador de tempo pessoal que roda localmente. Backend em Node.js com SQLite, frontend em HTML/JS puro sem estilização.
+Um rastreador de tempo pessoal que roda localmente. Backend em FastAPI com SQLite, frontend em HTML/JS puro sem estilização.
 
 ## Funcionalidades
 
