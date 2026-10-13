@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tock · timer & projects</title>
+    <!-- no CSS – pure HTML structure -->
+</head>
+<body>
+    <header>
+        <h1>Tock</h1>
+        <p><em>simple time tracking – projects, tags & entries</em></p>
+        <hr>
+    </header>
+
+    <main>
+        <!-- ========== TIMER SECTION ========== -->
+        <section>
+            <h2>Cronômetro</h2>
+
+            <fieldset>
+                <legend>Configurações do timer</legend>
+
+                <p>
+                    <label for="project-select"><strong>Projeto:</strong></label><br>
+                    <select id="project-select">
+                        <option value="">-- sem projeto --</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="description"><strong>Descrição:</strong></label><br>
+                    <input type="text" id="description" placeholder="O que está fazendo?" size="40">
+                </p>
+
+                <p>
+                    <label for="tags-select"><strong>Tags (múltipla seleção):</strong></label><br>
+                    <select id="tags-select" multiple size="4" style="min-width:180px;">
+                        <!-- options serão preenchidas via JS -->
+                    </select>
+                    <br><small>segure Ctrl (Windows) ou ⌘ (Mac) para selecionar várias</small>
+                </p>
+            </fieldset>
+
+            <p>
+                <button id="start-stop-btn" type="button">▶ Iniciar</button>
+                &nbsp;|&nbsp;
+                <strong id="elapsed">00:00:00</strong>
+            </p>
+        </section>
+
+        <hr>
+
+        <!-- ========== CREATE PROJECT + LIST ========== -->
+        <section>
+            <h2>Criar Projeto</h2>
+
+            <p>
+                <label for="new-project-name">Nome do projeto:</label>
+                <input type="text" id="new-project-name" placeholder="ex: Trabalho, Pessoal" size="30">
+                <button id="create-project-btn" type="button">Criar Projeto</button>
+            </p>
+
+            <h3>Projetos existentes</h3>
+            <ul id="projects-list">
+                <!-- preenchido via JS -->
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- ========== CREATE TAG + LIST ========== -->
+        <section>
+            <h2>Criar Tag</h2>
+
+            <p>
+                <label for="new-tag-name">Nome da tag:</label>
+                <input type="text" id="new-tag-name" placeholder="ex: reunião, código" size="30">
+                <button id="create-tag-btn" type="button">Criar Tag</button>
+            </p>
+
+            <h3>Tags existentes</h3>
+            <ul id="tags-list">
+                <!-- preenchido via JS -->
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- ========== TIME ENTRIES ========== -->
+        <section>
+            <h2>Time Entries</h2>
+
+            <!-- table gives natural structure without CSS -->
+            <table border="1" cellpadding="6" cellspacing="0" width="100%">
+                <tbody id="entries-list">
+                    <!-- preenchido via JS -->
+                </tbody>
+            </table>
+
+            <p><small>as entradas aparecem aqui após finalizar o timer</small></p>
+        </section>
+
+        <hr>
+    </main>
+
+    <footer>
+        <p><small>Tock · UI organizada sem CSS · estrutura semântica</small></p>
+    </footer>
+
+    <!-- maintain original JS path; assume it fills the lists -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
