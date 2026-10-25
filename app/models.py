@@ -137,7 +137,7 @@ def create_time_entry(
 
 def update_time_entry(
     entry_id: int, fields: dict[str, Any]
-    ) -> Optional[dict[str, Any]]:
+) -> Optional[dict[str, Any]]:
     if not fields:
         return get_time_entry(entry_id)
     conn = get_connection()

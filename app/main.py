@@ -34,7 +34,9 @@ def api_list_projects():
     return models.list_projects()
 
 
-@app.post("/api/projects", response_model=ProjectOut, status_code=status.HTTP_201_CREATED)
+@app.post(
+    "/api/projects", response_model=ProjectOut, status_code=status.HTTP_201_CREATED
+)
 def api_create_project(payload: ProjectCreate):
     try:
         return models.create_project(payload.name)
@@ -74,7 +76,11 @@ def api_list_time_entries():
     return models.list_time_entries()
 
 
-@app.post("/api/time_entries", response_model=TimeEntryOut, status_code=status.HTTP_201_CREATED)
+@app.post(
+    "/api/time_entries",
+    response_model=TimeEntryOut,
+    status_code=status.HTTP_201_CREATED,
+)
 def api_create_time_entry(payload: TimeEntryCreate):
     started = payload.started_at or datetime.now(timezone.utc).isoformat()
     try:
@@ -116,7 +122,11 @@ class StartPayload(TimeEntryCreate):
     pass
 
 
-@app.post("/api/time_entries/start", response_model=TimeEntryOut, status_code=status.HTTP_201_CREATED)
+@app.post(
+    "/api/time_entries/start",
+    response_model=TimeEntryOut,
+    status_code=status.HTTP_201_CREATED,
+)
 def api_start_time_entry(payload: TimeEntryCreate):
     started = datetime.now(timezone.utc).isoformat()
     try:

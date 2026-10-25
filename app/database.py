@@ -22,5 +22,3 @@ def init_db() -> None:
             conn.commit()
         finally:
             conn.close()
-
-

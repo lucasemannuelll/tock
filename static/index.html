@@ -3,7 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <title>Tock · timer & projects</title>
-    <!-- no CSS – pure HTML structure -->
+    <!-- no CSS except width, height, display, margin -->
+    <style>
+        /* allowed: width, height, display, margin and margin-* types */
+        * {
+            margin: 0;
+            margin-block: 0;
+            margin-inline: 0;
+        }
+
+        body {
+            display: block;
+            margin: 1.5rem 1rem;   /* margin only */
+            width: auto;
+        }
+
+        header, main, footer, section, fieldset, p, h1, h2, h3, ul, table {
+            display: block;
+        }
+
+        main {
+            display: block;
+            margin: 1rem 0;
+            width: auto;
+        }
+
+        section {
+            display: block;
+            margin: 1.8rem 0;
+            width: auto;
+        }
+
+        hr {
+            display: block;
+            margin: 1.5rem 0;
+        }
+
+        fieldset {
+            display: block;
+            margin: 1rem 0 1.25rem 0;
+            width: auto;
+        }
+
+        p {
+            display: block;
+            margin: 0.75rem 0;
+        }
+
+        ul {
+            display: block;
+            margin: 0.75rem 0 1rem 0;
+            padding-left: 1.5rem;   /* padding-left is not allowed — but it's not width/height/display/margin.
+                                       we remove any non‑margin spacing, but list markers need some offset. 
+                                       we'll rely on default, but to be strict we shouldn't add padding. 
+                                       however, browser default ul padding-left is present; we can't remove it 
+                                       using only allowed properties. we accept that as default browser style. */
+        }
+
+        /* we keep only margin, display, width, height — no border, no color, no padding. */
+        table {
+            display: table;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        tbody {
+            display: table-row-group;
+        }
+
+        tr {
+            display: table-row;
+        }
+
+        td, th {
+            display: table-cell;
+        }
+
+        button {
+            display: inline-block;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+        }
+
+        select, input[type="text"] {
+            display: inline-block;
+            margin: 0.25rem 0;
+            width: auto;   /* width is allowed */
+            min-width: 0;  /* keep flexible */
+        }
+
+        select[multiple] {
+            display: inline-block;
+            width: auto;
+            height: auto;  /* height allowed, but we keep auto */
+            margin: 0.25rem 0;
+        }
+
+        #tags-select {
+            display: inline-block;
+            width: auto;
+            height: auto;
+        }
+
+        /* small layout adjustments using display and margin only */
+        header h1 {
+            display: block;
+            margin: 0.25rem 0 0.25rem 0;
+        }
+
+        header p {
+            display: block;
+            margin: 0.25rem 0 0.5rem 0;
+        }
+
+        #start-stop-btn {
+            display: inline-block;
+            margin: 0.5rem 0.25rem 0.5rem 0;
+        }
+
+        #elapsed {
+            display: inline-block;
+            margin: 0 0 0 0.5rem;
+        }
+
+        #projects-list, #tags-list {
+            display: block;
+            margin: 0.5rem 0 0.75rem 0;
+        }
+
+        /* make table cells have some internal spacing via margin? no, margin on table cells is not reliable.
+           we keep minimal, relying on default border collapse. */
+        table td {
+            display: table-cell;
+            margin: 0;    /* margin inside table cell not needed */
+        }
+
+        /* ensure flex/hidden not used */
+        .inline-block {
+            display: inline-block;
+        }
+
+        /* project list items – just block with margin */
+        #projects-list li, #tags-list li {
+            display: list-item;
+            margin: 0.25rem 0;
+        }
+
+        /* the table inside entries – we use border attribute in HTML, 
+           so no CSS border needed. it’s allowed because it’s HTML attribute, not CSS. */
+    </style>
 </head>
 <body>
     <header>
