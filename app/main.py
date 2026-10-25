@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, status
@@ -10,12 +10,12 @@ from .database import init_db
 from .schemas import (
     ProjectCreate,
     ProjectOut,
+    TagAssociate,
     TagCreate,
     TagOut,
-    TagAssociate,
     TimeEntryCreate,
-    TimeEntryUpdate,
     TimeEntryOut,
+    TimeEntryUpdate,
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -48,7 +48,6 @@ def api_create_project(payload: ProjectCreate):
 def api_delete_project(project_id: int):
     if not models.delete_project(project_id):
         raise HTTPException(status_code=404, detail="Project not found")
-    return None
 
 
 @app.get("/api/tags", response_model=list[TagOut])
@@ -68,7 +67,6 @@ def api_create_tag(payload: TagCreate):
 def api_delete_tag(tag_id: int):
     if not models.delete_tag(tag_id):
         raise HTTPException(status_code=404, detail="Tag not found")
-    return None
 
 
 @app.get("/api/time_entries", response_model=list[TimeEntryOut])
@@ -82,7 +80,7 @@ def api_list_time_entries():
     status_code=status.HTTP_201_CREATED,
 )
 def api_create_time_entry(payload: TimeEntryCreate):
-    started = payload.started_at or datetime.now(timezone.utc).isoformat()
+    started = payload.started_at or datetime.now(UTC).isoformat()
     try:
         return models.create_time_entry(
             payload.project_id, payload.description, started, payload.ended_at
@@ -115,7 +113,6 @@ def api_update_time_entry(entry_id: int, payload: TimeEntryUpdate):
 def api_delete_time_entry(entry_id: int):
     if not models.delete_time_entry(entry_id):
         raise HTTPException(status_code=404, detail="Time entry not found")
-    return None
 
 
 class StartPayload(TimeEntryCreate):
@@ -128,7 +125,7 @@ class StartPayload(TimeEntryCreate):
     status_code=status.HTTP_201_CREATED,
 )
 def api_start_time_entry(payload: TimeEntryCreate):
-    started = datetime.now(timezone.utc).isoformat()
+    started = datetime.now(UTC).isoformat()
     try:
         return models.start_time_entry(payload.project_id, payload.description, started)
     except Exception as e:
@@ -142,7 +139,7 @@ def api_stop_time_entry(entry_id: int):
         raise HTTPException(status_code=404, detail="Time entry not found")
     if entry["ended_at"] is not None:
         raise HTTPException(status_code=400, detail="Time entry already stopped")
-    ended = datetime.now(timezone.utc).isoformat()
+    ended = datetime.now(UTC).isoformat()
     return models.stop_time_entry(entry_id, ended)
 
 

@@ -1,4 +1,5 @@
-from typing import Any, Optional
+from typing import Any
+
 from .database import get_connection
 
 
@@ -94,7 +95,7 @@ def list_time_entries() -> list[dict[str, Any]]:
         conn.close()
 
 
-def get_time_entry(entry_id: int) -> Optional[dict[str, Any]]:
+def get_time_entry(entry_id: int) -> dict[str, Any] | None:
     conn = get_connection()
     try:
         row = conn.execute(
@@ -114,10 +115,10 @@ def get_time_entry(entry_id: int) -> Optional[dict[str, Any]]:
 
 
 def create_time_entry(
-    project_id: Optional[int],
+    project_id: int | None,
     description: str,
     started_at: str,
-    ended_at: Optional[str],
+    ended_at: str | None,
 ) -> dict[str, Any]:
 
     conn = get_connection()
@@ -137,7 +138,7 @@ def create_time_entry(
 
 def update_time_entry(
     entry_id: int, fields: dict[str, Any]
-) -> Optional[dict[str, Any]]:
+) -> dict[str, Any] | None:
     if not fields:
         return get_time_entry(entry_id)
     conn = get_connection()
@@ -164,12 +165,12 @@ def delete_time_entry(entry_id: int) -> bool:
 
 
 def start_time_entry(
-    project_id: Optional[int], description: str, started_at: str
+    project_id: int | None, description: str, started_at: str
 ) -> dict[str, Any]:
     return create_time_entry(project_id, description, started_at, None)
 
 
-def stop_time_entry(entry_id: int, ended_at: str) -> Optional[dict[str, Any]]:
+def stop_time_entry(entry_id: int, ended_at: str) -> dict[str, Any] | None:
     return update_time_entry(entry_id, {"ended_at": ended_at})
 
 
