@@ -12,6 +12,7 @@ venv/
 data/*.db
 data/*.db-wal
 data/*.db-shm
+*.db
 
 # Testes
 .pytest_cache/
