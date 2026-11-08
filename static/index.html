@@ -1,260 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Tock · timer & projects</title>
     <!-- no CSS except width, height, display, margin -->
     <style>
-        /* allowed: width, height, display, margin and margin-* types */
-        * {
-            margin: 0;
-            margin-block: 0;
-            margin-inline: 0;
-        }
+      * {
+        margin: 0;
+        margin-block: 0;
+        margin-inline: 0;
+      }
 
-        body {
-            display: block;
-            margin: 1.5rem 1rem;   /* margin only */
-            width: auto;
-        }
+      body {
+        display: block;
+        margin: 1.5rem 1rem;
+        width: auto;
+      }
 
-        header, main, footer, section, fieldset, p, h1, h2, h3, ul, table {
-            display: block;
-        }
+      header,
+      main,
+      footer,
+      section,
+      fieldset,
+      p,
+      h1,
+      h2,
+      h3,
+      ul,
+      table {
+        display: block;
+      }
 
-        main {
-            display: block;
-            margin: 1rem 0;
-            width: auto;
-        }
+      main {
+        display: block;
+        margin: 1rem 0;
+        width: auto;
+      }
 
-        section {
-            display: block;
-            margin: 1.8rem 0;
-            width: auto;
-        }
+      section {
+        display: block;
+        margin: 1.8rem 0;
+        width: auto;
+      }
 
-        hr {
-            display: block;
-            margin: 1.5rem 0;
-        }
+      hr {
+        display: block;
+        margin: 1.5rem 0;
+      }
 
-        fieldset {
-            display: block;
-            margin: 1rem 0 1.25rem 0;
-            width: auto;
-        }
+      fieldset {
+        display: block;
+        margin: 1rem 0 1.25rem 0;
+        width: auto;
+      }
 
-        p {
-            display: block;
-            margin: 0.75rem 0;
-        }
+      p {
+        display: block;
+        margin: 0.75rem 0;
+      }
 
-        ul {
-            display: block;
-            margin: 0.75rem 0 1rem 0;
-            padding-left: 1.5rem;   /* padding-left is not allowed — but it's not width/height/display/margin.
-                                       we remove any non‑margin spacing, but list markers need some offset. 
-                                       we'll rely on default, but to be strict we shouldn't add padding. 
-                                       however, browser default ul padding-left is present; we can't remove it 
-                                       using only allowed properties. we accept that as default browser style. */
-        }
+      ul {
+        display: block;
+        margin: 0.75rem 0 1rem 0;
+        padding-left: 1.5rem;
+      }
 
-        /* we keep only margin, display, width, height — no border, no color, no padding. */
-        table {
-            display: table;
-            width: 100%;
-            margin: 1rem 0;
-        }
+      table {
+        display: table;
+        width: 100%;
+        margin: 1rem 0;
+      }
 
-        tbody {
-            display: table-row-group;
-        }
+      tbody {
+        display: table-row-group;
+      }
 
-        tr {
-            display: table-row;
-        }
+      tr {
+        display: table-row;
+      }
 
-        td, th {
-            display: table-cell;
-        }
+      td,
+      th {
+        display: table-cell;
+      }
 
-        button {
-            display: inline-block;
-            margin: 0.25rem 0.25rem 0.25rem 0;
-        }
+      button {
+        display: inline-block;
+        margin: 0.25rem 0.25rem 0.25rem 0;
+      }
 
-        select, input[type="text"] {
-            display: inline-block;
-            margin: 0.25rem 0;
-            width: auto;   /* width is allowed */
-            min-width: 0;  /* keep flexible */
-        }
+      select,
+      input[type="text"] {
+        display: inline-block;
+        margin: 0.25rem 0;
+        width: auto;
+        min-width: 0;
+      }
 
-        select[multiple] {
-            display: inline-block;
-            width: auto;
-            height: auto;  /* height allowed, but we keep auto */
-            margin: 0.25rem 0;
-        }
+      select[multiple] {
+        display: inline-block;
+        width: auto;
+        height: auto;
+        margin: 0.25rem 0;
+      }
 
-        #tags-select {
-            display: inline-block;
-            width: auto;
-            height: auto;
-        }
+      #tags-select {
+        display: inline-block;
+        width: auto;
+        height: auto;
+      }
 
-        /* small layout adjustments using display and margin only */
-        header h1 {
-            display: block;
-            margin: 0.25rem 0 0.25rem 0;
-        }
+      header h1 {
+        display: block;
+        margin: 0.25rem 0 0.25rem 0;
+      }
 
-        header p {
-            display: block;
-            margin: 0.25rem 0 0.5rem 0;
-        }
+      header p {
+        display: block;
+        margin: 0.25rem 0 0.5rem 0;
+      }
 
-        #start-stop-btn {
-            display: inline-block;
-            margin: 0.5rem 0.25rem 0.5rem 0;
-        }
+      #start-stop-btn {
+        display: inline-block;
+        margin: 0.5rem 0.25rem 0.5rem 0;
+      }
 
-        #elapsed {
-            display: inline-block;
-            margin: 0 0 0 0.5rem;
-        }
+      #elapsed {
+        display: inline-block;
+        margin: 0 0 0 0.5rem;
+      }
 
-        #projects-list, #tags-list {
-            display: block;
-            margin: 0.5rem 0 0.75rem 0;
-        }
+      #projects-list,
+      #tags-list {
+        display: block;
+        margin: 0.5rem 0 0.75rem 0;
+      }
 
-        /* make table cells have some internal spacing via margin? no, margin on table cells is not reliable.
+      /* make table cells have some internal spacing via margin? no, margin on table cells is not reliable.
            we keep minimal, relying on default border collapse. */
-        table td {
-            display: table-cell;
-            margin: 0;    /* margin inside table cell not needed */
-        }
+      table td {
+        display: table-cell;
+        margin: 0; /* margin inside table cell not needed */
+      }
 
-        /* ensure flex/hidden not used */
-        .inline-block {
-            display: inline-block;
-        }
+      /* ensure flex/hidden not used */
+      .inline-block {
+        display: inline-block;
+      }
 
-        /* project list items – just block with margin */
-        #projects-list li, #tags-list li {
-            display: list-item;
-            margin: 0.25rem 0;
-        }
+      /* project list items – just block with margin */
+      #projects-list li,
+      #tags-list li {
+        display: list-item;
+        margin: 0.25rem 0;
+      }
 
-        /* the table inside entries – we use border attribute in HTML, 
+      /* the table inside entries – we use border attribute in HTML, 
            so no CSS border needed. it’s allowed because it’s HTML attribute, not CSS. */
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Tock</h1>
-        <p><em>simple time tracking – projects, tags & entries</em></p>
-        <hr>
+      <h1>Tock</h1>
+      <p><em>simple time tracking – projects, tags & entries</em></p>
+      <hr />
     </header>
 
     <main>
-        <!-- ========== TIMER SECTION ========== -->
-        <section>
-            <h2>Cronômetro</h2>
+      <!-- ========== TIMER SECTION ========== -->
+      <section>
+        <h2>Cronômetro</h2>
 
-            <fieldset>
-                <legend>Configurações do timer</legend>
+        <fieldset>
+          <legend>Configurações do timer</legend>
 
-                <p>
-                    <label for="project-select"><strong>Projeto:</strong></label><br>
-                    <select id="project-select">
-                        <option value="">-- sem projeto --</option>
-                    </select>
-                </p>
+          <p>
+            <label for="project-select"><strong>Projeto:</strong></label
+            ><br />
+            <select id="project-select">
+              <option value="">-- sem projeto --</option>
+            </select>
+          </p>
 
-                <p>
-                    <label for="description"><strong>Descrição:</strong></label><br>
-                    <input type="text" id="description" placeholder="O que está fazendo?" size="40">
-                </p>
+          <p>
+            <label for="description"><strong>Descrição:</strong></label
+            ><br />
+            <input
+              type="text"
+              id="description"
+              placeholder="O que está fazendo?"
+              size="40"
+            />
+          </p>
 
-                <p>
-                    <label for="tags-select"><strong>Tags (múltipla seleção):</strong></label><br>
-                    <select id="tags-select" multiple size="4" style="min-width:180px;">
-                        <!-- options serão preenchidas via JS -->
-                    </select>
-                    <br><small>segure Ctrl (Windows) ou ⌘ (Mac) para selecionar várias</small>
-                </p>
-            </fieldset>
+          <p>
+            <label for="tags-select"
+              ><strong>Tags (múltipla seleção):</strong></label
+            ><br />
+            <select id="tags-select" multiple size="4" style="min-width: 180px">
+              <!-- options serão preenchidas via JS -->
+            </select>
+            <br /><small
+              >segure Ctrl (Windows) ou ⌘ (Mac) para selecionar várias</small
+            >
+          </p>
+        </fieldset>
 
-            <p>
-                <button id="start-stop-btn" type="button">▶ Iniciar</button>
-                &nbsp;|&nbsp;
-                <strong id="elapsed">00:00:00</strong>
-            </p>
-        </section>
+        <p>
+          <button id="start-stop-btn" type="button">▶ Iniciar</button>
+          &nbsp;|&nbsp;
+          <strong id="elapsed">00:00:00</strong>
+        </p>
+      </section>
 
-        <hr>
+      <hr />
 
-        <!-- ========== CREATE PROJECT + LIST ========== -->
-        <section>
-            <h2>Criar Projeto</h2>
+      <!-- ========== CREATE PROJECT + LIST ========== -->
+      <section>
+        <h2>Criar Projeto</h2>
 
-            <p>
-                <label for="new-project-name">Nome do projeto:</label>
-                <input type="text" id="new-project-name" placeholder="ex: Trabalho, Pessoal" size="30">
-                <button id="create-project-btn" type="button">Criar Projeto</button>
-            </p>
+        <p>
+          <label for="new-project-name">Nome do projeto:</label>
+          <input
+            type="text"
+            id="new-project-name"
+            placeholder="ex: Trabalho, Pessoal"
+            size="30"
+          />
+          <button id="create-project-btn" type="button">Criar Projeto</button>
+        </p>
 
-            <h3>Projetos existentes</h3>
-            <ul id="projects-list">
-                <!-- preenchido via JS -->
-            </ul>
-        </section>
+        <h3>Projetos existentes</h3>
+        <ul id="projects-list">
+          <!-- preenchido via JS -->
+        </ul>
+      </section>
 
-        <hr>
+      <hr />
 
-        <!-- ========== CREATE TAG + LIST ========== -->
-        <section>
-            <h2>Criar Tag</h2>
+      <!-- ========== CREATE TAG + LIST ========== -->
+      <section>
+        <h2>Criar Tag</h2>
 
-            <p>
-                <label for="new-tag-name">Nome da tag:</label>
-                <input type="text" id="new-tag-name" placeholder="ex: reunião, código" size="30">
-                <button id="create-tag-btn" type="button">Criar Tag</button>
-            </p>
+        <p>
+          <label for="new-tag-name">Nome da tag:</label>
+          <input
+            type="text"
+            id="new-tag-name"
+            placeholder="ex: reunião, código"
+            size="30"
+          />
+          <button id="create-tag-btn" type="button">Criar Tag</button>
+        </p>
 
-            <h3>Tags existentes</h3>
-            <ul id="tags-list">
-                <!-- preenchido via JS -->
-            </ul>
-        </section>
+        <h3>Tags existentes</h3>
+        <ul id="tags-list">
+          <!-- preenchido via JS -->
+        </ul>
+      </section>
 
-        <hr>
+      <hr />
 
-        <!-- ========== TIME ENTRIES ========== -->
-        <section>
-            <h2>Time Entries</h2>
+      <!-- ========== TIME ENTRIES ========== -->
+      <section>
+        <h2>Time Entries</h2>
 
-            <!-- table gives natural structure without CSS -->
-            <table border="1" cellpadding="6" cellspacing="0" width="100%">
-                <tbody id="entries-list">
-                    <!-- preenchido via JS -->
-                </tbody>
-            </table>
+        <!-- table gives natural structure without CSS -->
+        <table border="1" cellpadding="6" cellspacing="0" width="100%">
+          <tbody id="entries-list">
+            <!-- preenchido via JS -->
+          </tbody>
+        </table>
 
-            <p><small>as entradas aparecem aqui após finalizar o timer</small></p>
-        </section>
+        <p><small>as entradas aparecem aqui após finalizar o timer</small></p>
+      </section>
 
-        <hr>
+      <hr />
     </main>
 
     <footer>
-        <p><small>Tock · UI organizada sem CSS · estrutura semântica</small></p>
+      <p><small>Tock · UI organizada sem CSS · estrutura semântica</small></p>
     </footer>
 
     <!-- maintain original JS path; assume it fills the lists -->
     <script src="/static/app.js"></script>
-</body>
+  </body>
 </html>

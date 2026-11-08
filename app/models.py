@@ -136,9 +136,7 @@ def create_time_entry(
         conn.close()
 
 
-def update_time_entry(
-    entry_id: int, fields: dict[str, Any]
-) -> dict[str, Any] | None:
+def update_time_entry(entry_id: int, fields: dict[str, Any]) -> dict[str, Any] | None:
     if not fields:
         return get_time_entry(entry_id)
     conn = get_connection()
